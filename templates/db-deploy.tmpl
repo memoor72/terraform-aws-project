@@ -1,0 +1,7 @@
+#!/bin/bash
+sudo apt-get update -y
+sudo apt-get install git -y
+sudo apt-get install mysql-client -y
+which mysql || echo "mysql not installed"
+git clone -b vp-rem https://github.com/devopshydclub/vprofile-project.git
+mysql -h ${rds_endpoint} -u ${db_user} --password=${db_password} accounts --ssl-mode=DISABLED < /home/ubuntu/vprofile-project/src/main/resources/db_backup.sql
