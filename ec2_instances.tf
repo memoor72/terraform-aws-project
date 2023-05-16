@@ -2,7 +2,7 @@ data "template_file" "init" {
    template = file("${path.module}/templates/db-deploy.tmpl")
 
   vars = {
-    rds_endpoint = aws_db_instance.devpro-rds.address
+    rds_endpoint = aws_db_instance.devpro_rds.address
     db_user     = var.db_user
     db_password = var.db_password
   }
@@ -27,15 +27,15 @@ resource "aws_instance" "bastion" {
   user_data = data.template_file.init.rendered
 
   provisioner "file" {
-    content     = templatefile("templates/db-deploy.tmpl", { rds_endpoint = aws_db_instance.devpro-rds.address, db_user = var.db_user, db_password = var.db_password })
-    destination = "/tmp/devpro-dbdeploy.sh"
+    content     = templatefile("templates/db-deploy.tmpl", { rds_endpoint = aws_db_instance.devpro_rds.address, db_user = var.db_user, db_password = var.db_password })
+    destination = "/tmp/devpro_dbdeploy.sh"
   }
 
 
   provisioner "remote-exec" {
   inline = [
-    "chmod +x /tmp/devpro-dbdeploy.sh",
-    "sudo /tmp/devpro-dbdeploy.sh 2>&1"
+    "chmod +x /tmp/devpro_dbdeploy.sh",
+    "sudo /tmp/devpro_dbdeploy.sh 2>&1"
   ]
 }
 
@@ -46,7 +46,7 @@ resource "aws_instance" "bastion" {
     host        = self.public_ip
   }
 
-  depends_on = [aws_db_instance.devpro-rds]
+  depends_on = [aws_db_instance.devpro_rds]
 }
 
 locals {

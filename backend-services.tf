@@ -17,7 +17,7 @@ resource "aws_elasticache_subnet_group" "devpro-ecache-subgrp" {
   }
 }
 
-resource "aws_db_instance" "devpro-rds" {
+resource "aws_db_instance" "devpro_rds" {
   allocated_storage      = 20
   db_name                = var.db_name
   engine                 = "mysql"
